@@ -1,22 +1,29 @@
 package com.example.demo.api;
 
+import com.example.demo.exception.InternalServerException;
+import com.example.demo.exception.NotFoundException;
+import com.example.demo.service.SampleService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/sample")
 public class SampleController {
 
+    private static final Logger log = LoggerFactory.getLogger(SampleController.class);
+
     @Autowired
-    private RestTemplate restTemplate;
+    private SampleService sampleService;
 
     @RequestMapping("/{contractId}")
-    public void getContract(@PathVariable ("contractId") Integer integer) {
+    public String getContract(@PathVariable (value = "contractId") Integer integer) {
+        return sampleService.getContract();
+    }
 
-        String result = restTemplate.getForObject("https://jsonmock.hackerrank.com/api/movies/search/?Title=Un", String.class);
-        System.out.println(result);
+    @RequestMapping(method = RequestMethod.POST, value = "/insertContract")
+    public String insertContract(@RequestBody String integer) {
+        return sampleService.insertContract();
     }
 }

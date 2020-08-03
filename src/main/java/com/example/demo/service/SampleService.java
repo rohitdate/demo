@@ -1,13 +1,18 @@
 package com.example.demo.service;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.example.demo.dao.SampleDao;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class SampleService {
 
-    private List<Integer> integerList = new ArrayList<>();
+    @Autowired
+    private SampleDao sampleDao;
 
-    public void insertInteger(Integer integer) {
-        integerList.add(integer);
+    public String getContract() {
+        return sampleDao.getContract();
+    }
+
+    public String insertContract() {
+        return sampleDao.insertContract();
     }
 }
